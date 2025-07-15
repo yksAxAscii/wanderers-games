@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>お問い合わせ | Wanderers Games</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-color: #111;
+      --text-color: #eee;
+      --accent-color: #888;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Noto Sans JP', sans-serif;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.97), rgba(0, 0, 0, 0.97)),
+        url('images/logo.jpg') center/contain no-repeat;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      background: #000;
+      z-index: 1000;
+    }
+
+    .nav-links a {
+      margin-left: 16px;
+      text-decoration: none;
+      color: var(--accent-color);
+      font-weight: 600;
+      font-size: 0.95rem;
+      position: relative;
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #fff;
+      border-bottom: 2px solid #fff;
+      padding-bottom: 2px;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 160px auto 60px;
+      padding: 0 20px;
+    }
+
+    .container.animate {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .container.animate.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 32px;
+      text-align: center;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    label {
+      font-weight: bold;
+      color: var(--accent-color);
+    }
+
+    input,
+    textarea {
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      background: #222;
+      color: #fff;
+      font-size: 1rem;
+      resize: vertical;
+    }
+
+    button {
+      background: #444;
+      color: #fff;
+      padding: 10px;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    button:disabled {
+      background: #333;
+      cursor: not-allowed;
+    }
+
+    button:hover:enabled {
+      background: #666;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 40px 0;
+      color: #666;
+      border-top: 1px solid #333;
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <a href="https://twitter.com/Wanderers_Games?ref_src=twsrc%5Etfw" class="twitter-follow-button"
+      data-show-count="false">Follow @x</a>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <nav class="nav-links">
+      <a href="index.html">About</a>
+      <a href="works.html">Games</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="guideline.html">Guideline</a>
+      <a href="contact.html" class="active">Contact</a>
+    </nav>
+  </header>
+
+  <main class="container animate">
+    <h1>お問い合わせ</h1>
+    <form id="contactForm">
+      <label for="email">メールアドレス</label>
+      <input type="email" name="email" id="email" required />
+
+      <label for="subject">要件</label>
+      <input type="text" name="_subject" id="subject" required />
+
+      <label for="message">本文</label>
+      <textarea name="message" id="message" rows="6" required></textarea>
+
+      <button type="submit" id="submitBtn" disabled>送信する</button>
+    </form>
+  </main>
+
+  <footer>&copy; 2025 Wanderers Games</footer>
+
+  <script>
+    const email = document.getElementById("email");
+    const subject = document.getElementById("subject");
+    const message = document.getElementById("message");
+    const submitBtn = document.getElementById("submitBtn");
+    const form = document.getElementById("contactForm");
+
+    function checkForm() {
+      submitBtn.disabled = !(email.value && subject.value && message.value);
+    }
+
+    email.addEventListener("input", checkForm);
+    subject.addEventListener("input", checkForm);
+    message.addEventListener("input", checkForm);
+
+    // 送信処理
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const formData = new URLSearchParams();
+      formData.append("email", email.value);
+      formData.append("_subject", subject.value);
+      formData.append("message", message.value);
+      formData.append("_captcha", "false");
+
+      try {
+        const res = await fetch("https://formsubmit.co/ajax/hiromu.asakura.biz@gmail.com", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+          },
+          body: formData
+        });
+
+        if (res.ok) {
+          showPopup("送信が完了しました。ありがとうございます！");
+          form.reset();
+          checkForm();
+        } else {
+          showPopup("送信に失敗しました。時間をおいて再度お試しください。");
+        }
+      } catch (err) {
+        showPopup("エラーが発生しました。ネットワーク接続をご確認ください。");
+      }
+    });
+
+    function showPopup(message) {
+      const popup = document.createElement("div");
+      popup.textContent = message;
+      popup.style.position = "fixed";
+      popup.style.bottom = "30px";
+      popup.style.left = "50%";
+      popup.style.transform = "translateX(-50%)";
+      popup.style.background = "#333";
+      popup.style.color = "#fff";
+      popup.style.padding = "12px 24px";
+      popup.style.borderRadius = "8px";
+      popup.style.zIndex = "3000";
+      popup.style.boxShadow = "0 0 8px rgba(0,0,0,0.3)";
+      popup.style.opacity = "0";
+      popup.style.transition = "opacity 0.3s";
+
+      document.body.appendChild(popup);
+      requestAnimationFrame(() => {
+        popup.style.opacity = "1";
+      });
+
+      setTimeout(() => {
+        popup.style.opacity = "0";
+        setTimeout(() => document.body.removeChild(popup), 300);
+      }, 3000);
+    }
+
+    // アニメーション発火（他ページからの遷移にも対応）
+    window.addEventListener('load', () => {
+      const container = document.querySelector('.container');
+      container.classList.remove('show');
+      void container.offsetWidth;
+      container.classList.add('show');
+    });
+  </script>
+</body>
+
+</html>
