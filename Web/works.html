@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>制作実績 | Wanderers Games</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #111;
+            --text-color: #eee;
+            --accent-color: #888;
+            --card-bg: #1a1a1a;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Noto Sans JP', sans-serif;
+            background:
+                linear-gradient(to bottom, rgba(0, 0, 0, 0.97), rgba(0, 0, 0, 0.97)),
+                url('images/logo.jpg') center/contain no-repeat;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 32px;
+            background: #000;
+            z-index: 1000;
+        }
+
+        .logo {
+            height: 5vw;
+            max-height: 48px;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-links a {
+            margin-left: 16px;
+            text-decoration: none;
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 0.95rem;
+            position: relative;
+        }
+
+        .nav-links a:not(:last-child)::after {
+            content: '|';
+            position: absolute;
+            right: -10px;
+            color: var(--accent-color);
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #fff;
+            border-bottom: 2px solid #fff;
+            padding-bottom: 2px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 160px auto 40px;
+            padding: 0 20px;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+
+        .work-card {
+            background: var(--card-bg);
+            padding: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            transform: translateY(30px);
+            opacity: 0;
+            transition: all 0.6s ease;
+        }
+
+        .work-card.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .work-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .work-thumbnail {
+            width: 100%;
+            height: 250px;
+            object-fit: contain;
+            border-radius: 10px;
+            background-color: #000;
+            padding: 0px;
+        }
+
+        .work-title {
+            font-size: 0.9rem;
+            margin: 12px 0 4px;
+            font-weight: bold;
+        }
+
+        .work-platform {
+            font-size: 0.7rem;
+            color: var(--accent-color);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: #222;
+            width: 90%;
+            max-width: 600px;
+            /* ← 最大幅を少し狭める */
+            max-height: 90vh;
+            /* ← 高さを画面に収める */
+            overflow-y: auto;
+            /* ← 中身が多い場合にスクロール */
+            padding: 20px;
+            border-radius: 8px;
+            position: relative;
+        }
+
+
+        .modal iframe {
+            width: 100%;
+            height: 300px;
+            margin-bottom: 12px;
+        }
+
+        .screenshot-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .screenshot-row img {
+            flex: 1;
+            max-width: calc(33.333% - 8px);
+            border-radius: 4px;
+            object-fit: cover;
+        }
+
+        .store-links img {
+            height: 40px;
+            margin-right: 12px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 12px;
+            right: 16px;
+            font-size: 1.5rem;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .modal-content::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            /* ダークグレー背景 */
+            border-radius: 4px;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb {
+            background: #555;
+            /* スクロールバー本体 */
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .modal-content::-webkit-scrollbar-thumb:hover {
+            background: #999;
+            /* ホバー時に少し明るく */
+        }
+
+
+        @media (max-width: 600px) {
+            .screenshot-row {
+                flex-direction: column;
+            }
+
+            .screenshot-row img {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header class="navbar">
+        <a href="https://twitter.com/Wanderers_Games" class="twitter-follow-button" data-show-count="false">Follow
+            @x</a>
+        <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <nav class="nav-links">
+            <a href="index.html">About</a>
+            <a href="works.html" class="active">Games</a>
+            <a href="privacy.html">Privacy</a>
+            <a href="guideline.html">Guideline</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1>制作実績</h1>
+        <div class="works-grid">
+            <div class="work-card" onclick="openModal(this)" data-title="ローグライクブロック崩し Endless Smash Down"
+                data-video="https://www.youtube.com/embed/BjWBUao_fX8" data-img1="images/ESD_ss1.jpg"
+                data-img2="images/ESD_ss2.jpg" data-img3="images/ESD_ss3.jpg"
+                data-description="超爽快なローグライクなブロック崩しが登場！<br>コインを集めて自分を強化！転生を繰り返してさらに強化！<br>どこまでも現れる敵を倒しランキング一位を目指せ！"
+                data-appstore="https://apps.apple.com/jp/app/%E3%83%AD%E3%83%BC%E3%82%B0%E3%83%A9%E3%82%A4%E3%82%AF%E3%83%96%E3%83%AD%E3%83%83%E3%82%AF%E5%B4%A9%E3%81%97-endlesssmashdown/id6472162808?l=en-US"
+                data-googleplay="https://play.google.com/store/apps/details?id=com.WanderersGames.BlockBreaker&hl=ja">
+                <img src="images/ESD_Logo.jpg" alt="ゲームタイトル" class="work-thumbnail">
+                <div class="work-title">Endless Smash Down</div>
+                <div class="work-platform">iOS / Android</div>
+            </div>
+
+            <div class="work-card" onclick="openModal(this)" data-title="Primitive Crasher~チル系クリッカー~"
+                data-video="https://www.youtube.com/embed/POhASZ2boaU" data-img1="images/PC_ss1.jpg"
+                data-img2="images/PC_ss2.jpg" data-img3="images/PC_ss3.jpg"
+                data-description="色鮮やかなボールが飛び交う、今までにないチル系クリッカーゲームが登場！<br>敵を倒して入手したお金でボールを強化！<br>転生で新しいアーティファクトを入手！<br>20種類以上あるアーティファクトを獲得し、まだ見ぬ桁の敵をやっつけよう！"
+                data-appstore="https://apps.apple.com/jp/app/primitivecrasher-%E3%83%81%E3%83%AB%E7%B3%BB%E3%82%AF%E3%83%AA%E3%83%83%E3%82%AB%E3%83%BC/id6553971812?l=en-US"
+                data-googleplay="https://play.google.com/store/apps/details?id=com.WanderersGames.PrimitiveCrasher&hl=ja">
+                <img src="images/PC_Logo.jpg" alt="ゲームタイトル" class="work-thumbnail">
+                <div class="work-title">Primitive Crasher</div>
+                <div class="work-platform">iOS / Android</div>
+            </div>
+
+            <div class="work-card" onclick="openModal()">
+                <div class="work-card" onclick="openModal(this)" data-title="ブリリアント・ブロキマナク"
+                    data-video="https://www.youtube.com/embed/nFmclW_PJYU" data-img1="images/BB_ss1.jpg"
+                    data-img2="images/BB_ss2.jpg" data-img3="images/BB_ss3.jpg"
+                    data-description="VRCで大人気の「ブロキマナク」の世界がスマホゲーになって登場！<br>個性豊かなドット絵の住人たちと共に、コインのインフレが止まらない奇妙な世界を旅します。<br>シンプルなのに止め時がわからない中毒系放置ゲーム。<br>コインが溢れ、時間が溶ける。<br>ブロキマナクを変えるのは、あなたの指先ひとつ。"
+                    data-appstore="https://apps.apple.com/jp/app/%E3%83%96%E3%83%AA%E3%83%AA%E3%82%A2%E3%83%B3%E3%83%88-%E3%83%96%E3%83%AD%E3%82%AD%E3%83%9E%E3%83%8A%E3%82%AF/id6741055988?l=en-US"
+                    data-googleplay="">
+                    <img src="images/BB_Logo.jpg" alt="ゲームタイトル" class="work-thumbnail">
+                    <div class="work-title">ブリリアント・ブロキマナク</div>
+                    <div class="work-platform">iOS</div>
+                </div>
+
+            </div>
+
+    </main>
+
+    <!-- モーダル表示部分 -->
+    <div class="modal" id="workModal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h1 id="modalTitle"></h1>
+            <iframe id="modalVideo" frameborder="0" allowfullscreen></iframe>
+            <div class="screenshot-row">
+                <img id="modalImg1" />
+                <img id="modalImg2" />
+                <img id="modalImg3" />
+            </div>
+            <p id="modalDescription"></p>
+            <div class="store-links">
+                <a id="modalAppstore" href="#" target="_blank">
+                    <img src="images/appstore-download-badge.png" />
+                </a>
+                <a id="modalGoogleplay" href="#" target="_blank">
+                    <img src="images/googleplay-badge.png" />
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(card) {
+            const modal = document.getElementById('workModal');
+
+            // 各要素に内容をセット
+            document.getElementById('modalTitle').innerHTML = card.dataset.title;
+            document.getElementById('modalVideo').src = card.dataset.video;
+            document.getElementById('modalImg1').src = card.dataset.img1;
+            document.getElementById('modalImg2').src = card.dataset.img2;
+            document.getElementById('modalImg3').src = card.dataset.img3;
+            document.getElementById('modalDescription').innerHTML = card.dataset.description;
+            document.getElementById('modalAppstore').href = card.dataset.appstore;
+
+            // GooglePlayリンクが空かどうかチェック
+            const googlePlayLink = document.getElementById('modalGoogleplay');
+            const googlePlayUrl = card.dataset.googleplay;
+
+            if (googlePlayUrl) {
+                googlePlayLink.href = googlePlayUrl;
+                googlePlayLink.style.display = 'inline-block';
+            } else {
+                googlePlayLink.style.display = 'none';
+            }
+
+            // フェードイン
+            modal.style.display = 'flex';
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 10);
+        }
+
+
+        function closeModal() {
+            const modal = document.getElementById('workModal');
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.style.display = 'none';
+                document.getElementById('modalVideo').src = ''; // 動画停止
+            }, 300);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.work-card');
+            cards.forEach((card, i) => {
+                setTimeout(() => {
+                    card.classList.add('show');
+                }, i * 150); // 順番に出現させる（0.15秒ずつ遅らせる）
+            });
+        });
+    </script>
+
+</body>
+
+</html>

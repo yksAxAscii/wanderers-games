@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>配信ガイドライン | Wanderers Games</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #111;
+      --text-color: #eee;
+      --accent-color: #888;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Noto Sans JP', sans-serif;
+      background:
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.97), rgba(0, 0, 0, 0.97)),
+        url('images/logo.jpg') center/contain no-repeat;
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.8;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 32px;
+      background: #000;
+      z-index: 1000;
+    }
+
+    .logo {
+      height: 5vw;
+      max-height: 48px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links a {
+      margin-left: 16px;
+      text-decoration: none;
+      color: var(--accent-color);
+      font-weight: 600;
+      font-size: 0.95rem;
+      position: relative;
+    }
+
+    .nav-links a:not(:last-child)::after {
+      content: '|';
+      position: absolute;
+      right: -10px;
+      color: var(--accent-color);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: #fff;
+      border-bottom: 2px solid #fff;
+      padding-bottom: 2px;
+    }
+
+    .content {
+      max-width: 800px;
+      margin: 160px auto 40px;
+      padding: 0 20px;
+
+      /* 追加: アニメーション初期状態 */
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all 0.6s ease;
+    }
+
+    .content.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #fff;
+    }
+
+    h2 {
+      font-size: 1.2rem;
+      border-left: 4px solid var(--accent-color);
+      padding-left: 10px;
+      margin-top: 40px;
+      color: #fff;
+    }
+
+    p,
+    li {
+      color: #ccc;
+    }
+
+    ul {
+      padding-left: 1.2em;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 20px;
+      color: #666;
+      border-top: 1px solid #333;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 12px 20px;
+      }
+
+      .nav-links {
+        margin-top: 8px;
+        flex-wrap: wrap;
+      }
+
+      .logo {
+        height: 36px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="navbar">
+    <a href="https://twitter.com/Wanderers_Games?ref_src=twsrc%5Etfw" class="twitter-follow-button"
+      data-show-count="false">Follow @x</a>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <nav class="nav-links">
+      <a href="index.html">About</a>
+      <a href="works.html">Games</a>
+      <a href="privacy.html">Privacy</a>
+      <a href="guideline.html" class="active">Guideline</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </header>
+
+  <main class="content">
+    <h1>配信について</h1>
+    <p>Wanderers Games のゲームを楽しんでくださってありがとうございます。<br>
+      以下に当サークルが制作するゲームの動画配信に関するガイドラインを記載します。<br>
+      ご一読いただき、ぜひご活用ください。</p>
+
+    <h2>可能なこと</h2>
+    <ul>
+      <li>このガイドラインに沿ったうえで、ゲームのプレイ動画の投稿やライブ配信を行うこと</li>
+      <li>YouTubeなどの動画配信プラットフォームでの収益化</li>
+      <li>ゲーム内のスクリーンショットを加工のうえ、動画のサムネイルなどに使用すること</li>
+      <li>攻略情報、ネタバレを含む内容の配信・投稿</li>
+    </ul>
+
+    <h2>ご協力いただきたいこと</h2>
+    <ul>
+      <li>動画や配信の概要欄等に、ゲームタイトルとストアリンクを記載してください</li>
+      <li>音声や字幕など、配信者による何らかの創意工夫を加えていただけると幸いです（実況・紹介など）</li>
+    </ul>
+
+    <h2>禁止させていただくこと</h2>
+    <ul>
+      <li>ゲーム内映像や音声を、そのまま無編集で再配信・転載すること</li>
+    </ul>
+
+    <p>※上記に該当しないケースや、企業・法人での利用についてはお問い合わせよりご連絡ください。</p>
+  </main>
+
+  <footer>
+    &copy; 2025 Wanderers Games
+  </footer>
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      // 1フレーム遅らせてからclass追加
+      requestAnimationFrame(() => {
+        document.querySelector('.content').classList.add('show');
+      });
+    });
+  </script>
+  
+</body>
+
+</html>
