@@ -16,8 +16,7 @@
     body {
       margin: 0;
       font-family: 'Noto Sans JP', sans-serif;
-      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.97), rgba(0, 0, 0, 0.97)),
-        url('images/logo.jpg') center/contain no-repeat;
+      background: linear-gradient(to bottom, rgba(0, 0, 0, 0.97), rgba(0, 0, 0, 0.97)), url('images/logo.jpg') center/contain no-repeat;
       background-color: var(--bg-color);
       color: var(--text-color);
     }
@@ -35,13 +34,32 @@
       z-index: 1000;
     }
 
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      height: 3px;
+      width: 25px;
+      background: #fff;
+      margin: 4px 0;
+      border-radius: 2px;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+    }
+
     .nav-links a {
-      margin-left: 16px;
       text-decoration: none;
       color: var(--accent-color);
       font-weight: 600;
       font-size: 0.95rem;
-      position: relative;
     }
 
     .nav-links a:hover,
@@ -49,6 +67,34 @@
       color: #fff;
       border-bottom: 2px solid #fff;
       padding-bottom: 2px;
+    }
+
+    @media (max-width: 768px) {
+      .nav-links {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        background: #000;
+        position: absolute;
+        top: 64px;
+        left: 0;
+        padding: 0;
+        overflow: hidden;
+        max-height: 0;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .nav-links.show {
+        max-height: 300px;
+        opacity: 1;
+        padding: 16px 0;
+        pointer-events: auto;
+      }
+
+      .hamburger {
+        display: flex;
+      }
     }
 
     .container {
@@ -128,10 +174,16 @@
 
 <body>
   <header class="navbar">
-    <a href="https://twitter.com/Wanderers_Games?ref_src=twsrc%5Etfw" class="twitter-follow-button"
-      data-show-count="false">Follow @x</a>
+    <a href="https://twitter.com/Wanderers_Games" class="twitter-follow-button" data-show-count="false">Follow @x</a>
     <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-    <nav class="nav-links">
+
+    <div class="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+    <nav class="nav-links" id="navMenu">
       <a href="index.html">About</a>
       <a href="works.html">Games</a>
       <a href="privacy.html">Privacy</a>
@@ -159,6 +211,11 @@
   <footer>&copy; 2025 Wanderers Games</footer>
 
   <script>
+    function toggleMenu() {
+      const nav = document.getElementById('navMenu');
+      nav.classList.toggle('show');
+    }
+
     const email = document.getElementById("email");
     const subject = document.getElementById("subject");
     const message = document.getElementById("message");
@@ -173,7 +230,6 @@
     subject.addEventListener("input", checkForm);
     message.addEventListener("input", checkForm);
 
-    // 送信処理
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
@@ -231,7 +287,6 @@
       }, 3000);
     }
 
-    // アニメーション発火（他ページからの遷移にも対応）
     window.addEventListener('load', () => {
       const container = document.querySelector('.container');
       container.classList.remove('show');
