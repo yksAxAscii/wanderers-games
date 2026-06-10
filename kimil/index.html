@@ -31,20 +31,61 @@
             aria-label="『君のLが聞き取れない』（I CAN'T HEAR YOUR L'S.）トップへ">
             <span class="brand__logo" role="img" aria-hidden="true"></span>
         </a>
-        <nav class="site-nav" id="site-nav" aria-label="メイン">
-            <div class="nav-list-wrap">
-                <ul class="nav-list" id="nav-list">
-                    <li><a href="#intro">INTRO</a></li>
-                    <li><a href="#story">STORY</a></li>
-                    <li><a href="#news">NEWS</a></li>
-                    <li><a href="#character">CHARACTER</a></li>
-                    <li><a href="#gallery">GALLERY</a></li>
-                    <li><a href="#spec">SPEC</a></li>
-                </ul>
-                <span class="nav-indicator" id="nav-indicator" aria-hidden="true"></span>
-            </div>
-        </nav>
     </header>
+
+    <button type="button" class="site-nav-overlay" id="site-nav-overlay" aria-label="メニューを閉じる"
+        tabindex="-1" hidden></button>
+
+    <nav class="site-nav" id="site-nav" aria-label="メイン">
+        <div class="site-nav__deco" aria-hidden="true"></div>
+        <div class="site-nav__panel">
+            <div class="site-nav__head">
+                <a class="site-nav__brand" href="#intro" aria-label="トップへ">
+                    <span class="site-nav__brand-logo" role="img" aria-hidden="true"></span>
+                </a>
+                <button type="button" class="site-nav__close" aria-label="メニューを閉じる">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="site-nav__body">
+                <div class="site-nav__menu-label">
+                    <span class="site-nav__menu-title">MENU</span>
+                    <span class="site-nav__menu-rule" aria-hidden="true">
+                        <span class="site-nav__menu-line"></span>
+                        <span class="site-nav__menu-sakura">✿</span>
+                    </span>
+                </div>
+                <div class="nav-list-wrap">
+                    <ul class="nav-list" id="nav-list">
+                        <li><a href="#intro">INTRO</a></li>
+                        <li><a href="#story">STORY</a></li>
+                        <li><a href="#news">NEWS</a></li>
+                        <li><a href="#character">CHARACTER</a></li>
+                        <li><a href="#gallery">GALLERY</a></li>
+                        <li><a href="#spec">SPEC</a></li>
+                    </ul>
+                    <span class="nav-indicator" id="nav-indicator" aria-hidden="true"></span>
+                </div>
+            </div>
+            <footer class="site-nav__footer">
+                <div class="site-nav__footer-divider" aria-hidden="true">
+                    <span class="site-nav__footer-diamond">✦</span>
+                </div>
+                <p class="site-nav__tagline">Teaser Site</p>
+                <div class="site-nav__share">
+                    <span class="site-nav__share-label">SHARE</span>
+                    <a class="site-nav__share-x" href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fwanderersgames.com%2Fkimil%2F&amp;text=%E3%80%8E%E5%90%9B%E3%81%AEL%E3%81%8C%E8%81%9E%E3%81%8D%E5%8F%96%E3%82%8C%E3%81%AA%E3%81%84%E3%80%8F%E5%85%AC%E5%BC%8F%E3%83%86%E3%82%A3%E3%82%B6%E3%83%BC"
+                        target="_blank" rel="noopener noreferrer" aria-label="Xでシェア">
+                        <svg class="site-nav__share-x-icon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+                            <path fill="currentColor"
+                                d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                        </svg>
+                    </a>
+                </div>
+                <p class="site-nav__copy">©2026 WanderersGames</p>
+            </footer>
+        </div>
+    </nav>
 
     <main>
         <section class="section section--hero" id="intro">
@@ -76,7 +117,7 @@
                     </div>
                     <div class="hero-v2__brand">
                         <h1 class="hero-v2__title">
-                            <img class="hero-v2__logo" src="images/title-logo.webp"
+                            <img class="hero-v2__logo" src="images/title-logo.png"
                                 alt="『君のLが聞き取れない』（I CAN'T HEAR YOUR L'S.）" width="1024"
                                 height="553" decoding="async" fetchpriority="high" />
                         </h1>

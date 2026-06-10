@@ -21,7 +21,7 @@
     })();
 
     (function initHeroV2Scale() {
-        var MOBILE_MQ = window.matchMedia("(max-width: 900px)");
+        var MOBILE_MQ = window.matchMedia("(max-width: 1439px)");
         var heroV2ScaleRaf = null;
 
         function parsePx(value) {
@@ -82,13 +82,19 @@
 
     var navToggle = document.querySelector(".nav-toggle");
     var siteNav = document.getElementById("site-nav");
+    var navOverlay = document.getElementById("site-nav-overlay");
+    var navClose = document.querySelector(".site-nav__close");
     var navLinks = document.querySelectorAll(".nav-list a");
 
     function setNavOpen(open) {
         if (!siteNav || !navToggle) return;
         siteNav.classList.toggle("is-open", open);
         navToggle.setAttribute("aria-expanded", open ? "true" : "false");
+        document.body.classList.toggle("nav-open", open);
         document.body.style.overflow = open ? "hidden" : "";
+        if (navOverlay) {
+            navOverlay.hidden = !open;
+        }
     }
 
     if (navToggle && siteNav) {
@@ -97,11 +103,36 @@
             setNavOpen(!isOpen);
         });
 
+        if (navOverlay) {
+            navOverlay.addEventListener("click", function () {
+                setNavOpen(false);
+            });
+        }
+
+        if (navClose) {
+            navClose.addEventListener("click", function () {
+                setNavOpen(false);
+            });
+        }
+
+        document.addEventListener("keydown", function (e) {
+            if (e.key === "Escape" && siteNav.classList.contains("is-open")) {
+                setNavOpen(false);
+            }
+        });
+
         navLinks.forEach(function (a) {
             a.addEventListener("click", function () {
                 setNavOpen(false);
             });
         });
+
+        var navBrand = document.querySelector(".site-nav__brand");
+        if (navBrand) {
+            navBrand.addEventListener("click", function () {
+                setNavOpen(false);
+            });
+        }
     }
 
     (function initNavIndicator() {
@@ -120,7 +151,7 @@
             })
             .filter(Boolean);
 
-        var mobileMq = window.matchMedia("(max-width: 900px)");
+        var mobileMq = window.matchMedia("(max-width: 1439px)");
 
         function linkForId(id) {
             return document.querySelector('.nav-list a[href="#' + id + '"]');
