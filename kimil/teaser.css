@@ -57,6 +57,7 @@
     --hv2-delay-logo: 1.16s;
     --hv2-delay-copy-1: 1.82s;
     --hv2-delay-copy-2: 2.14s;
+    --hv2-delay-copy-3: 2.46s;
     --hv2-delay-petals: 0.95s;
 }
 
@@ -618,6 +619,47 @@ body.theme-pop::after {
     font-weight: 500;
 }
 
+.hero-v2__social {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 4px;
+    padding-left: var(--hero-v2-genre-offset-x);
+    pointer-events: auto;
+}
+
+.hero-v2__hashtag {
+    font-family: var(--font-ja);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: var(--pink-hot);
+    text-shadow:
+        0 0 14px rgba(255, 255, 255, 0.95),
+        0 0 6px rgba(255, 255, 255, 0.8);
+}
+
+.hero-v2__x-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    color: var(--pink-hot);
+    background: rgba(255, 255, 255, 0.88);
+    border: 1px solid rgba(255, 61, 138, 0.24);
+    text-decoration: none;
+    transition: background 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hero-v2__x-link:hover,
+.hero-v2__x-link:focus-visible {
+    background: rgba(255, 61, 138, 0.1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(255, 61, 138, 0.18);
+}
+
 @media (max-width: 1439px) {
     body.theme-pop {
         --header-h: var(--header-v2-h-mobile);
@@ -728,6 +770,21 @@ body.theme-pop::after {
         letter-spacing: 0.1em;
         line-height: 1.75;
         text-align: center;
+    }
+
+    .hero-v2__social {
+        justify-content: center;
+        margin-top: 8px;
+        padding-left: 0;
+    }
+
+    .hero-v2__hashtag {
+        font-size: 0.82rem;
+    }
+
+    .hero-v2__x-link {
+        width: 30px;
+        height: 30px;
     }
 
     .hero-v2__gradient {
@@ -923,6 +980,10 @@ body.theme-pop::after {
 
 .hero-v2--play .hero-v2__genre-line:nth-child(2) {
     animation: hero-v2-copy-in var(--hv2-dur-copy) ease-out var(--hv2-delay-copy-2) both;
+}
+
+.hero-v2--play .hero-v2__social {
+    animation: hero-v2-copy-in var(--hv2-dur-copy) ease-out var(--hv2-delay-copy-3) both;
 }
 
 .pop-outline {
@@ -2559,6 +2620,7 @@ html.reveal-on main > .section:not(.section--hero).is-inview > .section__inner >
     .hero-v2__char,
     .hero-v2__logo,
     .hero-v2__genre-line,
+    .hero-v2__social,
     .gallery-slide {
         transition: none;
     }
@@ -2576,7 +2638,8 @@ html.reveal-on main > .section:not(.section--hero).is-inview > .section__inner >
     .hero-v2--play .hero-v2__petals,
     .hero-v2--play .hero-v2__char,
     .hero-v2--play .hero-v2__logo,
-    .hero-v2--play .hero-v2__genre-line {
+    .hero-v2--play .hero-v2__genre-line,
+    .hero-v2--play .hero-v2__social {
         animation: none !important;
         opacity: 1 !important;
         transform: none !important;
