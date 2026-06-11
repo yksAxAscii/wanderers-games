@@ -49,11 +49,18 @@
             var viewportH = window.visualViewport
                 ? window.visualViewport.height
                 : window.innerHeight;
+            var availableW = isMobile ? hero.clientWidth : viewportW;
             var availableH = isMobile
-                ? viewportH
+                ? hero.clientHeight
                 : Math.max(0, viewportH - headerH);
 
-            var scale = Math.max(viewportW / designW, availableH / designH);
+            if (!availableW || !availableH) return;
+
+            var scaleW = availableW / designW;
+            var scaleH = availableH / designH;
+            var scale = isMobile
+                ? Math.min(scaleW, scaleH) * 0.98
+                : Math.max(scaleW, scaleH);
             root.style.setProperty("--hero-v2-scale", String(scale));
         }
 

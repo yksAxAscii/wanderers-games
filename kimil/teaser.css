@@ -24,7 +24,7 @@
     --hero-v2-scale: 1;
     
     --hero-v2-brand-offset-y: -57px;
-    --hero-v2-brand-offset-y-mobile: 40px;
+    --hero-v2-brand-offset-y-mobile: 16px;
     
     --hero-v2-logo-width: min(110%, 650px);
     --hero-v2-logo-width-mobile: min(70%, 360px);
@@ -678,11 +678,11 @@ body.theme-pop::after {
     .hero-v2__canvas {
         position: absolute;
         left: 50%;
-        top: 50%;
+        top: 0;
         width: var(--hero-v2-design-w-mobile);
         height: var(--hero-v2-design-h-mobile);
-        transform-origin: center center;
-        transform: translate(-50%, -50%) scale(var(--hero-v2-scale, 1));
+        transform-origin: top center;
+        transform: translateX(-50%) scale(var(--hero-v2-scale, 1));
     }
 
     .hero-v2__scene::after {
@@ -709,7 +709,7 @@ body.theme-pop::after {
         z-index: 6;
         justify-content: flex-start;
         gap: 10px;
-        padding: calc(var(--header-h) + 6px) 14px 0;
+        padding: calc(var(--header-h) + env(safe-area-inset-top, 0px) + 12px) 14px 0;
         align-items: center;
         text-align: center;
         transform: translateY(var(--hero-v2-brand-offset-y-mobile));
